@@ -12,22 +12,12 @@
   ],
   "routes": [
     {
-      "src": "/static/(.*)",
-      "dest": "/static/$1"
-    },
-    {
-      "src": "/media/(.*)",
-      "dest": "/media/$1"
-    },
-    {
       "src": "/(.*)",
       "dest": "MusicProject/wsgi.py"
     }
   ],
   "includeFiles": [
     "db.sqlite3",
-    "staticfiles/**",
-    "media/**",
     "MusicProject/**"
   ]
 }
