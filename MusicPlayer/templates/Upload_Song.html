@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Song</title>
+    <!-- Bootstrap CSS CDN -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Initially hide the Folder Name input */
+        .folder-name-group {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Upload Song &nbsp; <a class="nav-item" href="{% url 'Home' %}"> Home </a></h1>
+
+        <form action="{% url 'Upload_song' %}" method="post" enctype="multipart/form-data">
+            <!-- CSRF Token for Django -->
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="id_Song_name">Song Name</label>
+                <input type="text" class="form-control" id="id_Song_name" name="Song_name" maxlength="255" required>
+            </div>
+
+            <div class="form-group">
+                <label for="id_audio_file">Audio File</label>
+                <input type="file" class="form-control-file" id="id_audio_file" name="audio_file" required>
+            </div>
+
+            <div class="form-group">
+                <label for="id_Folder_Id">Select Folder</label>
+                <select class="form-control" id="id_Folder_Id" name="Folder_Id" required>
+                    <option value="">Select an option</option>
+                    <option value="Create_new_Folder">Create New Folder</option>
+                    {% for Folder in Folders %}
+                      <option value="{{ Folder.id }}">{{ Folder.FolderName }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group folder-name-group">
+                <label for="id_FolderName">New Folder Name</label>
+                <input type="text" class="form-control" id="id_FolderName" name="FolderName" maxlength="225">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Upload</button>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- JavaScript to handle dynamic form behavior -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var folderSelect = document.getElementById('id_Folder_Id');
+            var folderNameGroup = document.querySelector('.folder-name-group');
+            var folderNameInput = document.getElementById('id_FolderName');
+            var form = document.querySelector('form');
+
+            // Show/hide folder name input based on selection
+            folderSelect.addEventListener('change', function() {
+                if (folderSelect.value === 'Create_new_Folder') {
+                    folderNameGroup.style.display = 'block';
+                    folderNameInput.required = true; // Make folder name required
+                } else {
+                    folderNameGroup.style.display = 'none';
+                    folderNameInput.required = false; // Remove required attribute
+                }
+            });
+
+            // Validate form submission
+            form.addEventListener('submit', function(event) {
+                if (folderSelect.value === 'Create_new_Folder' && folderNameInput.value.trim() === '') {
+                    event.preventDefault();
+                    alert('Please enter a name for the new folder.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

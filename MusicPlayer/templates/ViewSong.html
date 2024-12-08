@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Songs</title>
+    <!-- Bootstrap CSS CDN -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+       
+        <h1 class="mb-4"> <a href="{%url 'Home'%}" style="text-decoration: none;"> ◀️  </a>{{Folder_Name}} </h1>
+      
+        
+        <ul class="list-group">
+            {% for song in key %}
+                <li class="list-group-item">
+                    <audio controls>
+                        <source src="{{ song.audio_file.url }}" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                    <span class="ml-3">{{ song.Song_name }}</span>
+                    <a href="{%url 'DeleteSong' song.id%}" style="text-decoration: none; border-radius:10px;" class="btn-danger p-2 mx-3"> Delete 🗑️</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+   
+</body>
+</html>
