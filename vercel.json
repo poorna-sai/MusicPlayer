@@ -1,16 +1,23 @@
 {
-
-"builds":[
+  "version": 2,
+  "builds": [
     {
-        "src":"MusicProject/wsgi.py",
-        "use":"@vercel/python",
-        "config":{"maxLambdaSize":"15mb" , "runtime":"python3.11"}
+      "src": "MusicProject/wsgi.py",
+      "use": "@vercel/python",
+      "config": {
+        "maxLambdaSize": "15mb",
+        "runtime": "python3.11"
+      }
     }
-],
-"routes":[
+  ],
+  "routes": [
     {
-        "src":"/(.*)",
-        "dest": "MusicProject/wsgi.py"
+      "src": "/(.*)",
+      "dest": "MusicProject/wsgi.py"
     }
-]
+  ],
+  "includeFiles": [
+    "db.sqlite3",
+    "MusicProject/**"
+  ]
 }
